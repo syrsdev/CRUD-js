@@ -1,81 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-		<title>crud</title>
-	</head>
-	<body>
-		<div class="container py-5">
-			<!-- nama -->
-			<div class="mb-3">
-				<label for="nama">Nama :</label>
-				<input type="text" class="form-control" placeholder="Nama" id="nama" />
-			</div>
-			<!-- role -->
-			<div class="mb-3">
-				<label for="role">Role :</label>
-				<select class="form-control" id="role">
-					<option value="">No Option</option>
-					<option value="frontend">Frontend</option>
-					<option value="backend">Backend</option>
-					<option value="fullstack">FullStack</option>
-				</select>
-			</div>
-			<!--button save  -->
-			<div class="mb-3 w-100 d-flex justify-content-end">
-				<button class="btn btn-primary" id="save">Save</button>
-			</div>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
-			<div class="bg-light w-100 p-3" style="min-height: 300px">
-				<div class="row" id="table"></div>
-			</div>
-		</div>
+    <title>crud</title>
+</head>
 
-		<script>
-			var db = [];
+<body>
+    <div class="container py-5">
+        <!-- nama -->
+        <div class="mb-3">
+            <label for="nama">Nama :</label>
+            <input type="text" class="form-control" placeholder="Nama" id="nama" />
+        </div>
+        <!-- role -->
+        <div class="mb-3">
+            <label for="role">Role :</label>
+            <select class="form-control" id="role">
+                <option value="">No Option</option>
+                <option value="frontend">Frontend</option>
+                <option value="backend">Backend</option>
+                <option value="fullstack">FullStack</option>
+            </select>
+        </div>
+        <!--button save  -->
+        <div class="mb-3 w-100 d-flex justify-content-end">
+            <button class="btn btn-primary" id="save">Save</button>
+        </div>
 
-			var editIndex = null;
+        <div class="bg-light w-100 p-3" style="min-height: 300px">
+            <div class="row" id="table"></div>
+        </div>
+    </div>
 
-			function hapus(index) {
-				db.splice(index, 1);
+    <script>
+        var db = [];
 
-				renderTable();
-			}
+        var editIndex = null;
 
-			function reset() {
-				let inputNama = document.getElementById("nama");
-				let inputRole = document.getElementById("role");
+        function hapus(index) {
+            db.splice(index, 1);
 
-				editIndex = null;
-				inputNama.value = "";
-				inputRole.value = "";
-			}
+            renderTable();
+        }
 
-			function edit(index) {
-				let orang = db[index];
-				let inputNama = document.getElementById("nama");
-				let inputRole = document.getElementById("role");
+        function reset() {
+            let inputNama = document.getElementById("nama");
+            let inputRole = document.getElementById("role");
 
-				inputNama.value = orang.name;
-				inputRole.value = orang.role;
+            editIndex = null;
+            inputNama.value = "";
+            inputRole.value = "";
+        }
 
-				editIndex = index;
-			}
+        function edit(index) {
+            let orang = db[index];
+            let inputNama = document.getElementById("nama");
+            let inputRole = document.getElementById("role");
 
-			function renderTable() {
-				let table = document.getElementById("table");
-				table.innerHTML = "";
+            inputNama.value = orang.name;
+            inputRole.value = orang.role;
 
-				let i;
-				for (i = 1; i <= db.length; i++) {
-					let orang = db[i - 1];
-					table.innerHTML += `
+            editIndex = index;
+        }
+
+        function renderTable() {
+            let table = document.getElementById("table");
+            table.innerHTML = "";
+
+            let i;
+            for (i = 1; i <= db.length; i++) {
+                let orang = db[i - 1];
+                table.innerHTML += `
 						<div class="col-sm-4 mb-3">
 							<div class="card">
 								<div class="card-body">
@@ -91,37 +94,44 @@
 							</div>
 						</div>
 					`;
-				}
-			}
+            }
+        }
 
-			window.onload = function () {
-				let btnSave = document.getElementById("save");
+        window.onload = function () {
+            let btnSave = document.getElementById("save");
 
-				btnSave.addEventListener("click", function () {
-					let inputNama = document.getElementById("nama");
-					let inputRole = document.getElementById("role");
+            btnSave.addEventListener("click", function () {
+                let inputNama = document.getElementById("nama");
+                let inputRole = document.getElementById("role");
 
-					if (editIndex === null) {
-						db.push({
-							nama: inputNama.value,
-							role: inputRole.value,
-						});
-					} else {
-						db[editIndex] = {
-							nama: inputNama.value,
-							role: inputRole.value,
-						};
-					}
-					reset();
-					renderTable();
-				});
-			};
-		</script>
+                if (editIndex === null) {
+                    db.push({
+                        nama: inputNama.value,
+                        role: inputRole.value,
+                    });
+                } else {
+                    db[editIndex] = {
+                        nama: inputNama.value,
+                        role: inputRole.value,
+                    };
+                }
+                reset();
+                renderTable();
+            });
+        };
+    </script>
 
-		<!-- Optional JavaScript -->
-		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	</body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
