@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+		<title>crud</title>
+	</head>
+	<body>
+		<div class="container py-5">
+			<!-- nama -->
+			<div class="mb-3">
+				<label for="nama">Nama :</label>
+				<input type="text" class="form-control" placeholder="Nama" id="nama" />
+			</div>
+			<!-- role -->
+			<div class="mb-3">
+				<label for="role">Role :</label>
+				<select class="form-control" id="role">
+					<option value="">No Option</option>
+					<option value="frontend">Frontend</option>
+					<option value="backend">Backend</option>
+					<option value="fullstack">FullStack</option>
+				</select>
+			</div>
+			<!--button save  -->
+			<div class="mb-3 w-100 d-flex justify-content-end">
+				<button class="btn btn-primary" id="save">Save</button>
+			</div>
+
+			<div class="bg-light w-100 p-3" style="min-height: 300px">
+				<div class="row" id="table"></div>
+			</div>
+		</div>
+
+		<script>
+			var db = [];
+
+			var editIndex = null;
+
+			function hapus(index) {
+				db.splice(index, 1);
+
+				renderTable();
+			}
+
+			function reset() {
+				let inputNama = document.getElementById("nama");
+				let inputRole = document.getElementById("role");
+
+				editIndex = null;
+				inputNama.value = "";
+				inputRole.value = "";
+			}
+
+			function edit(index) {
+				let orang = db[index];
+				let inputNama = document.getElementById("nama");
+				let inputRole = document.getElementById("role");
+
+				inputNama.value = orang.name;
+				inputRole.value = orang.role;
+
+				editIndex = index;
+			}
+
+			function renderTable() {
+				let table = document.getElementById("table");
+				table.innerHTML = "";
+
+				let i;
+				for (i = 1; i <= db.length; i++) {
+					let orang = db[i - 1];
+					table.innerHTML += `
+						<div class="col-sm-4 mb-3">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-5">
+										<h3>${orang.nama}</h3>
+										<span class="text-secondary">${orang.role}</span>
+									</div>
+									<div class="d-flex justify-content-end">
+										<button class="btn btn-warning mx-1 px-3" onClick="edit(${i - 1})" >Edit</button>
+										<button class="btn btn-danger px-3" onClick="hapus(${i - 1})" >Hapus</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					`;
+				}
+			}
+
+			window.onload = function () {
+				let btnSave = document.getElementById("save");
+
+				btnSave.addEventListener("click", function () {
+					let inputNama = document.getElementById("nama");
+					let inputRole = document.getElementById("role");
+
+					if (editIndex === null) {
+						db.push({
+							nama: inputNama.value,
+							role: inputRole.value,
+						});
+					} else {
+						db[editIndex] = {
+							nama: inputNama.value,
+							role: inputRole.value,
+						};
+					}
+					reset();
+					renderTable();
+				});
+			};
+		</script>
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	</body>
+</html>
