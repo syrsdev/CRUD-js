@@ -6,7 +6,7 @@ This project was created to practice CRUD in website development using JavaScrip
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/syrsdev/CRUD-js/blob/main/Cuplikan%20layar%202025-01-30%20175954.png)
 
 
 ## Tech Stack
